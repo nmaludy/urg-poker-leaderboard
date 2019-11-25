@@ -32,6 +32,15 @@ type = "post"
 | 2 | Nick | 200 |
 | 3 | Jeff | 400 |
 EOF
+
 ```
 
+# Deploy
+
+```shell
+hugo
+git add public
+git commit -m "Rendered new site $TODAY"
+git subtree push --prefix public origin gh-pages
+```
 
