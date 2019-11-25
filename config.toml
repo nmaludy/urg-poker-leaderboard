@@ -1,4 +1,4 @@
-baseURL = "https://encoretechnologies.github.io"
+baseURL = "https://nmaludy.github.io"
 languageCode = "en-us"
 title = "URG Poker Scores"
 theme = "hugo-future-imperfect"
