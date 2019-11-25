@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2019-11 on URG Poker Scores</title>
+    <link>https://nmaludy.github.io/categories/2019-11/</link>
+    <description>Recent content in 2019-11 on URG Poker Scores</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 24 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nmaludy.github.io/categories/2019-11/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Scores for 2019-11-24</title>
+      <link>https://nmaludy.github.io/scores/2019-11-24/</link>
+      <pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://nmaludy.github.io/scores/2019-11-24/</guid>
+      <description>   Place User Score     1 Larry 800   2 Nick 200   3 Jeff 400    </description>
+    </item>
+    
+  </channel>
+</rss>
