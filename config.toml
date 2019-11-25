@@ -1,4 +1,4 @@
-baseURL = "https://nmaludy.github.io"
+baseURL = "https://nmaludy.github.io/urg-poker-leaderboard"
 languageCode = "en-us"
 title = "URG Poker Scores"
 theme = "hugo-future-imperfect"
