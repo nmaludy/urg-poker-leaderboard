@@ -12,7 +12,7 @@ pluralizeListTitles = false
     # This will appear on the top left of the navigation bar
     navbarTitle          = "URG Poker Scores"
     # set this to the section name if section is not post
-    viewMorePostLink     = "/blog/"
+    viewMorePostLink     = "/scores/"
 
 # Optional Params
     # This will match the navbarTitle to the section of the website
@@ -88,8 +88,8 @@ pluralizeListTitles = false
     weight = 1
 
 [[menu.main]]
-    name = "Blog"
-    url = "/blog/"
+    name = "Scores"
+    url = "/scores/"
     identifier = "fa fa-newspaper-o"
     weight = 2
 
