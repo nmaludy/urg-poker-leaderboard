@@ -3,7 +3,7 @@ languageCode = "en-us"
 title = "URG Poker Scores"
 theme = "hugo-future-imperfect"
 preserveTaxonomyNames = true
-paginate = 3
+paginate = 5
 pluralizeListTitles = false
 
 [params]
@@ -18,13 +18,13 @@ pluralizeListTitles = false
     # This will match the navbarTitle to the section of the website
     dynamicTitles        = true
     # RSS icon that appear on the sidebar, next to the social media buttons
-    rssAppearAtTop       = true
-    rssAppearAtBottom    = true
+    rssAppearAtTop       = false
+    rssAppearAtBottom    = false
     # Social media buttons that appear on the sidebar
-    socialAppearAtTop    = true
-    socialAppearAtBottom = true
+    socialAppearAtTop    = false
+    socialAppearAtBottom = false
     categoriesByCount    = true
-    includeReadingTime   = true
+    includeReadingTime   = false
     # The set of favicons used are based on the write-up from this link:
     # https://github.com/audreyr/favicon-cheat-sheet
     # Please see the favicon partial template for more information
@@ -32,7 +32,7 @@ pluralizeListTitles = false
     faviconVersion       = ""
 
     # Disable showing the social sharing links on blog posts
-    socialShareDisabled = false
+    socialShareDisabled = true
 
     # Load custom CSS or JavaScript files. The variable is an array so that you
     # can load multiple files if necessary. You can also load the standard theme
@@ -76,7 +76,7 @@ pluralizeListTitles = false
 # Adjust the amount of recent posts on the sidebar.
 # This is optional. The default value 5 will be used
 [params.postAmount]
-    sidebar = 2
+    sidebar = 5
 
 # Set up your menu items in the navigation bar
 # You can use identifier to prepend a font awesome icon to your text

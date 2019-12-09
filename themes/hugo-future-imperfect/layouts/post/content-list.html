@@ -1,12 +1,32 @@
 <article class="post">
   {{ .Render "header" }}
+
+  {{ if .Site.Params.socialShare }}
+    <section id="social-share">
+      <ul class="icons">
+        {{ partial "share-links" . }}
+      </ul>
+    </section>
+  {{ end }}
+
   {{ .Render "featured" }}
-  {{ $.Scratch.Set "summary" ((delimit (findRE "<p.*?>(.|\n)*?</p>" .Content 1) "") | truncate (default 500 .Site.Params.summary_length) (default "&hellip;" .Site.Params.text.truncated ) | replaceRE "&amp;" "&" | safeHTML) }}
-  {{ $.Scratch.Get "summary" }}
+  <div id="content">
+    {{ .Content }}
+  </div>
+
   <footer>
-    <ul class="actions">
-      <li><a href="{{ .RelPermalink }}" class="button big">Continue Reading</a></li>
-    </ul>
-  {{ .Render "footer-category" }}
+    {{ .Render "footer-category" }}
   </footer>
+
+  <!-- Original content, this showed sumamries under scores/ (blog), Larry didn't like that -->
+  <!-- {{ .Render "header" }} -->
+  <!-- {{ .Render "featured" }} -->
+  <!-- {{ $.Scratch.Set "summary" ((delimit (findRE "<p.*?>(.|\n)*?</p>" .Content 1) "") | truncate (default 500 .Site.Params.summary_length) (default "&hellip;" .Site.Params.text.truncated ) | replaceRE "&amp;" "&" | safeHTML) }} -->
+  <!-- {{ $.Scratch.Get "summary" }} -->
+  <!-- <footer> -->
+  <!--   <ul class="actions"> -->
+  <!--     <li><a href="{{ .RelPermalink }}" class="button big">Continue Reading</a></li> -->
+  <!--   </ul> -->
+  <!-- {{ .Render "footer-category" }} -->
+  <!-- </footer> -->
 </article>
