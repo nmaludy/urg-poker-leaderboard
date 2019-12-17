@@ -1,0 +1,5 @@
+gitpython
+jinja2
+pyyaml
+requests
+six

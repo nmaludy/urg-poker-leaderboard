@@ -1,5 +1,8 @@
 # Setup
 
+Install git https://git-scm.com/download/win
+Install hugo https://gohugo.io/getting-started/installing/
+
 ``` shell
 git clone git@github.com:nmaludy/urg-poker-leaderboard.git
 cd urg-poker-leaderboard
@@ -9,7 +12,25 @@ rm -rf urg-poker-leaderboard/
 git submodule add https://github.com/pacollins/hugo-future-imperfect-slim themes/hugo-future-imperfect
 ```
 
-# Adding new score
+## python generator script setup
+
+Install python (3.6+) https://www.python.org/downloads/
+
+``` shell
+virtualenv venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
+
+# Adding new scores automatically
+
+``` shell
+source ./venv/bin/activate
+# This will automatically commit and push
+python ./poker_mavens.py
+```
+
+## Adding new score (manual)
 
 ``` shell
 mkdir content/scores/
