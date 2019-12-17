@@ -37,15 +37,16 @@ EOF
 
 # Deploy
 
-```shell
-hugo
-git add public
-git commit -m "Rendered new site $TODAY"
-git push origin master
-# git subtree push --prefix public origin gh-pages
+https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-of-project-pages-from-your-gh-pages-branch
 
-git subtree split --prefix public -b gh-pages
-git push -f origin gh-pages:gh-pages
-git branch -D gh-pages
+### Do these once on the repo (already done here)
+
+``` shell
+./bin/setup_ghpages_branch.sh
 ```
 
+### Do these every time you want to deploy
+
+``` shell
+./bin/publish_to_ghpages.sh
+```
