@@ -24,7 +24,8 @@ echo "Generating site"
 hugo
 
 echo "Updating gh-pages branch"
-cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
+export TODAY=$(date +%Y-%m-%d)
+cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh) - $TODAY"
 
 echo "Pushing to github"
 git push origin gh-pages
