@@ -348,11 +348,15 @@ if __name__ == '__main__':
     for a in agg:
         hugo_repo.render_day_scores_to_file(a)
 
-    if hugo_repo.is_change():
+    changed = hugo_repo.is_change()
+    if changed:
         print("files have changed, committing, rendering and pushing")
+        print(changed)
+        print("end changed")
         hugo_repo.commit_scores_and_push()
         hugo_repo.render_site_and_push()
     else:
         print("nothing changed, not doing anything")
 
     # TODO - advanced logging
+    exit(0)
