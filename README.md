@@ -96,7 +96,23 @@ notepad.exe config.yaml
 
 ## Setup scheduled task
 
-TODO
+``` powershell
+General:
+  user: administrator
+  Run whether user is logged in or not
+  Configure For: Server 2012 R2
+  
+Triggers:
+  Schedule:
+  Daily @ 8pm
+  Repeat every 10 minutes for a duration of 2 hours
+  Enabled
+  
+Actions:
+ Start a program
+ Program/script: C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe
+ Add arguments: -Command "&{ C:\Users\Administrator\git\urg-poker-leaderboard\run_windows.ps1 *> C:\Users\Administrator\git\urg-poker-leaderboard\poker_mavens.log }; exit $LASTEXITCODE"
+```
 
 # Create the site from scratch
 
