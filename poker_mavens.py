@@ -284,7 +284,8 @@ class HugoPokerRepo(object):
         with pushd(self.repo_path):
             print("Deleting old publication")
             # rm -rf public
-            shutil.rmtree('public')
+            if os.path.isdir('public'):
+                shutil.rmtree('public')
             # mkdir public
             os.mkdir('public')
             # git worktree prune
