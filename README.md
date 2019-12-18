@@ -1,7 +1,105 @@
-# Setup
+# Poker Server Setup
 
-Install git https://git-scm.com/download/win
-Install hugo https://gohugo.io/getting-started/installing/
+## Install Poker Mavens
+TODO
+
+### Open up Firewall for Poker Mavens
+TODO
+
+## Restore config data
+TODO
+
+``` shell
+C:\Users\Adminsitrator\AppData\Roaming\Poker Mavens
+```
+
+## Install Chocolatey
+
+https://chocolatey.org/docs/installation
+
+``` powershell
+# install
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# test
+choco --version
+```
+
+## Install git
+
+https://git-scm.com/download/win
+
+``` powershell
+choco install -y git
+```
+
+## Install hugo
+
+https://gohugo.io/getting-started/installing/
+
+``` powershell
+choco install -y hugo
+```
+
+## Install python
+
+https://www.python.org/downloads/windows/
+
+``` powershell
+choco install -y python3
+```
+
+Add the following System environment variables in Syste -> Advanced System Settings -> Advanced -> Environment Variables:
+
+``` powershell
+PYTHON_PATH = C:\Python38
+# append the following to PATH
+PATH = ;%PYTHON_PATH%;%PYTHON_PATH%\Scripts
+```
+You will now have to start a new PowerShell session for these variables to be updated.
+
+Install virtualenv
+``` powershell
+pip install virtualenv
+```
+
+## Setup GitHub deploy key (SSH)
+
+``` bash
+# run this on a linux box or figure out the equivelent on windows
+ssh-keygen -o -a 100 -t ed25519
+
+# put the SSH keys into C:\Users\<username>\.ssh
+
+# copy the public key into the GitHub repo as a deploy key
+```
+
+## Clone repo
+
+``` powershell
+mkdir git
+cd git
+git clone git@github.com:nmaludy/urg-poker-leaderboard.git
+cd urg-poker-leaderboard
+virtualenv venv
+.\venv\bin\activate
+pip install -r requirements.txt
+```
+
+## Setup the config
+
+``` powershell
+# assuming you're in the urg-poker-leaderboard directory
+cp config.example.yaml config.yaml
+notepad.exe config.yaml
+```
+
+## Setup scheduled task
+
+TODO
+
+# Create the site from scratch
+
 
 ``` shell
 git clone git@github.com:nmaludy/urg-poker-leaderboard.git

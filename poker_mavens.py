@@ -117,9 +117,9 @@ class HugoPokerRepo(object):
     def __init__(self, repo_url, points_map):
         self.repo_url = repo_url
         self.repo_name = repo_url.split('/')[-1].replace('.git', '')
-        self.repo_path = os.path.join('.', self.repo_name)
-        self.template_path = os.path.join('.', self.repo_name, 'templates', 'scores.j2.md')
-        self.rendered_scores_path = os.path.join('.', self.repo_name, 'content', 'scores')
+        self.repo_path = '.'
+        self.template_path = os.path.join(self.repo_path, 'templates', 'scores.j2.md')
+        self.rendered_scores_path = os.path.join(self.repo_path, 'content', 'scores')
         self.points_map = points_map
 
     def clone_or_pull(self):
@@ -329,36 +329,29 @@ if __name__ == '__main__':
     hugo_repo = HugoPokerRepo(config['git_repo'], config['points'])
     hugo_repo.clone_or_pull()
 
-    # results_list = client.tournaments_results_list()
-    # scores_list = []
-    # for r in results_list['data']:
-    #     tr = client.tournaments_results_get(r['Date'], r['Name'])
-    #     pprint_json(tr)
-    #     scores = hugo_repo.tournament_results_to_scores(tr)
-    #     pprint_json(scores)
-    #     scores_list.append(scores)
+    results_list = client.tournaments_results_list()
+    scores_list = []
+    for r in results_list['data']:
+        tr = client.tournaments_results_get(r['Date'], r['Name'])
+        pprint_json(tr)
+        scores = hugo_repo.tournament_results_to_scores(tr)
+        pprint_json(scores)
+        scores_list.append(scores)
 
-    # agg = hugo_repo.aggregate_scores_by_date(scores_list)
-    # pprint_json(agg)
+    agg = hugo_repo.aggregate_scores_by_date(scores_list)
+    pprint_json(agg)
 
-    # agg = hugo_repo.accumulate_month_scores(agg)
-    # pprint_json(agg)
+    agg = hugo_repo.accumulate_month_scores(agg)
+    pprint_json(agg)
 
-    # for a in agg:
-    #     hugo_repo.render_day_scores_to_file(a)
+    for a in agg:
+        hugo_repo.render_day_scores_to_file(a)
 
     if hugo_repo.is_change():
-        print("files have changed")
+        print("files have changed, committing, rendering and pushing")
+        hugo_repo.commit_scores_and_push()
+        hugo_repo.render_site_and_push()
     else:
-        print("nothing changed")
+        print("nothing changed, not doing anything")
 
-    #hugo_repo.commit_scores_and_push()
-
-    hugo_repo.render_site_and_push()
-
-    # TODO - logging
-    # TODO - change this to point at local directory instead of cloning
-    #
-    # TODO - finish readme instructions from ground up
-    # TODO - install on server (setup scheduled task)
-    # TODO - create deploy key for github
+    # TODO - advanced logging
