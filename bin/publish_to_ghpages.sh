@@ -8,6 +8,12 @@ then
   exit 1;
 fi
 
+if [ -n "$TRAVIS_BUILD" ]
+then
+    git config user.email "administrator@urgpoker.com"
+    git config user.name "URG Poker Bot"
+fi
+
 echo "Deleting old publication"
 rm -rf public
 mkdir public

@@ -126,6 +126,10 @@ rm -rf urg-poker-leaderboard/
 git submodule add https://github.com/pacollins/hugo-future-imperfect-slim themes/hugo-future-imperfect
 ```
 
+## Setup travis deploy key
+https://gist.github.com/qoomon/c57b0dc866221d91704ffef25d41adcf
+
+
 ## python generator script setup
 
 Install python (3.6+) https://www.python.org/downloads/
