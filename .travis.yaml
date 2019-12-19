@@ -1,4 +1,6 @@
 ---
+language: generic
+
 before_install:
   - >-
     openssl aes-256-cbc
