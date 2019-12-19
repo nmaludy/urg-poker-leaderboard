@@ -307,18 +307,24 @@ class HugoPokerRepo(object):
             shutil.rmtree(os.path.join('public'))
 
             print("Generating site")
-            subprocess.run(['hugo'], check=True)
+            out = subprocess.run(['hugo'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            print(out.stdout)
 
             print("Updating gh-pages branch")
             # cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh) - {}"
             with pushd('public'):
-                self.repo.git.add()
+                #self.repo.git.add('--all')
                 t = datetime.datetime.now().isoformat()
-                self.repo.index.commit("URG Poker Bot - Auto rendering site on {}".format(t))
+                #self.repo.index.commit("URG Poker Bot - Auto rendering site on {}".format(t))
+                
+                #print("Pushing to github")
+                #o = self.repo.remotes.origin
+                #o.push('gh-pages')
+                
+                subprocess.run(['git', 'add', '--all'], check=True)
+                subprocess.run(['git', 'commit', '-m', "URG Poker Bot - Auto rendering site on {}".format(t)], check=True)
+                subprocess.run(['git', 'push', 'origin', 'gh-pages'], check=True)
 
-                print("Pushing to github")
-                o = self.repo.remotes.origin
-                o.push('gh-pages')
 
 
 if __name__ == '__main__':
