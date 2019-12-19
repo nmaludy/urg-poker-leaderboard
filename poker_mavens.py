@@ -307,12 +307,13 @@ class HugoPokerRepo(object):
             shutil.rmtree(os.path.join('public'))
 
             print("Generating site")
-            subprocess.run(['hugo'], check=True)
+            out = subprocess.run(['hugo'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            print(out.stdout)
 
             print("Updating gh-pages branch")
             # cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh) - {}"
             with pushd('public'):
-                self.repo.git.add()
+                self.repo.git.add('--all')
                 t = datetime.datetime.now().isoformat()
                 self.repo.index.commit("URG Poker Bot - Auto rendering site on {}".format(t))
 
