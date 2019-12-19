@@ -1,12 +1,12 @@
 #!/bin/sh
 # https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-of-project-pages-from-your-gh-pages-branch
 
-# if [ "`git status -s`" ]
-# then
-#   echo "The working directory is dirty. Please commit any pending changes."
-#   echo "$(git status -s)"
-#   exit 1;
-# fi
+if [ "`git status -s`" ]
+then
+  echo "The working directory is dirty. Please commit any pending changes."
+  echo "$(git status -s)"
+  exit 1;
+fi
 
 if [ -n "$TRAVIS_BUILD" ]
 then
