@@ -284,7 +284,7 @@ class HugoPokerRepo(object):
         with pushd(self.repo_path):
             if os.name == 'nt':
                 print('running windows script')
-                self.c.run('.\\bin\\publish_windows.ps1')
+                self.c.run('powershell.exe -file .\\bin\\publish_windows.ps1')
             else:
                 print('running linux script')
                 self.c.run('./bin/publish_to_ghpages.sh')
