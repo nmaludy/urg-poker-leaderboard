@@ -283,33 +283,10 @@ class HugoPokerRepo(object):
     def render_site_and_push(self):
         # copied from bin/publish_to_gh_pages.sh
         with pushd(self.repo_path):
-            r = self.c.run('git rev-parse --quiet --verify render', warn=True)
-            if r.exited:
-                print("Checking out NEW render branch")
-                self.c.run('git checkout -b render')
+            if os.name == 'nt':
+                self.c.run('.\\bin\\publish_windows.ps1')
             else:
-                print("Checking out EXISTING render branch")
-                self.c.run('git checkout render')
-
-            print("Deleting old publication")
-            # rm -rf public
-            if os.path.isdir('public'):
-                shutil.rmtree('public')
-            # mkdir public
-            os.mkdir('public')
-
-            print("Generating site")
-            self.c.run('hugo')
-
-            print("Adding all changes in public/")
-            self.c.run('git add public')
-
-            print("Committing public/ to render branch")
-            t = datetime.datetime.now().isoformat()
-            self.c.run('git commit -m "URG Poker Bot - Auto rendering site on {}"'.format(t))
-
-            print("Updating gh-pages branch")
-            self.c.run('git subtree push --prefix public origin gh-pages')
+                self.c.run('./bin/publish_to_ghpages.sh')
 
 
 @invoke.task

@@ -16,7 +16,9 @@ hugo
 echo "Updating gh-pages branch"
 cd public
 git add --all
-git commit -m "Publishing to gh-pages (publish.sh)"
+$today = Get-Date -Format "yyyy-MM-dd"
+git commit -m "Publishing to gh-pages (publish.sh) - $today"
+git push origin gh-pages
 cd ..
 
 #echo "Pushing to github"
