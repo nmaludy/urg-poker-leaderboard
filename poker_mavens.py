@@ -2,6 +2,7 @@
 import contextlib
 import datetime
 import git
+import glob
 import jinja2
 import json
 import os
@@ -304,7 +305,13 @@ class HugoPokerRepo(object):
                            check=True)
 
             print("Removing existing files")
-            shutil.rmtree(os.path.join('public'))
+            #shutil.rmtree(os.path.join('public'))
+            files = glob.glob(os.path.join('public', '*'))
+            for f in files:
+                if os.path.isdir(f):
+                    shutil.rmtree(f)
+                else:
+                    os.remove(f)
 
             print("Generating site")
             out = subprocess.run(['hugo'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -320,10 +327,23 @@ class HugoPokerRepo(object):
                 #print("Pushing to github")
                 #o = self.repo.remotes.origin
                 #o.push('gh-pages')
-                
-                subprocess.run(['git', 'add', '--all'], check=True)
-                subprocess.run(['git', 'commit', '-m', "URG Poker Bot - Auto rendering site on {}".format(t)], check=True)
-                subprocess.run(['git', 'push', 'origin', 'gh-pages'], check=True)
+
+                print("Checking git status after rendering in public")
+                out = subprocess.run(['git', 'status', '--porcelain'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                print(out.stdout)
+                if out.stdout:
+                    print("Rendering produced new data, committing and pushing")
+                    out = subprocess.run(['git', 'add', '--all'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    print(out.stdout)
+                    out = subprocess.run(['git', 'commit', '-m', '"URG Poker Bot - Auto rendering site on {}"'.format(t)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    print(out.stdout)
+                    if out.returncode != 0:
+                        raise ValueError("Git commit failed")
+                    out = subprocess.run(['git', 'push', 'origin', 'gh-pages'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    print(out.stdout)
+                else:
+                    print("Rendering didn't change anything skipping commit and push")
+
 
 
 
@@ -360,7 +380,7 @@ if __name__ == '__main__':
         print(changed)
         print("end changed")
         hugo_repo.commit_scores_and_push()
-        hugo_repo.render_site_and_push()
+        #hugo_repo.render_site_and_push()
     else:
         print("nothing changed, not doing anything")
 
