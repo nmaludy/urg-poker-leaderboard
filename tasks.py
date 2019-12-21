@@ -320,8 +320,7 @@ def build(c):
     for a in agg:
         hugo_repo.render_day_scores_to_file(a)
 
-    #changed = hugo_repo.is_change()
-    changed = True
+    changed = hugo_repo.is_change()
     if changed:
         print("files have changed, committing, rendering and pushing")
         print(changed)
