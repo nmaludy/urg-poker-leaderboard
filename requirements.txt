@@ -1,4 +1,4 @@
-gitpython
+invoke
 jinja2
 pyyaml
 requests

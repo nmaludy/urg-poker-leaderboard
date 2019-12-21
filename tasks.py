@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 import contextlib
 import datetime
-import git
-import glob
+import invoke
 import jinja2
 import json
 import os
 import re
 import requests
-import shutil
 import six
 import subprocess
 import yaml
@@ -115,7 +113,8 @@ class PokerMavensClient(object):
 
 class HugoPokerRepo(object):
 
-    def __init__(self, repo_url, points_map):
+    def __init__(self, c, repo_url, points_map):
+        self.c = c
         self.repo_url = repo_url
         self.repo_name = repo_url.split('/')[-1].replace('.git', '')
         self.repo_path = '.'
@@ -126,12 +125,10 @@ class HugoPokerRepo(object):
     def clone_or_pull(self):
         # if the directory exists, pull, otherwise clone a fresh copy
         if os.path.isdir(self.repo_path):
-            self.repo = git.Repo(self.repo_path)
-            o = self.repo.remotes.origin
-            o.pull()
+            with pushd(self.repo_path):
+                self.c.run("git pull")
         else:
-            self.repo = git.Repo.clone_from(self.repo_url,
-                                            self.repo_path)
+            self.c.run("git clone {} {}".format(self.repo_url, self.repo_path))
 
     def tournament_results_to_scores(self, tournament_results):
         scores = {
@@ -268,92 +265,55 @@ class HugoPokerRepo(object):
         # A  content/scores/2019-12-15.md
         #
         # if nothing has changed, returns empty string
-        return self.repo.git.status('--porcelain')
+        return self.c.run('git status --porcelain')
 
     def commit_scores_and_push(self):
         print("Adding all data in content/")
-        self.repo.git.add('content')
+        self.c.run('git add content')
         print("Committing to local repo...")
         t = datetime.datetime.now().isoformat()
-        self.repo.index.commit("URG Poker Bot - Automatically updating scores on {}".format(t))
-        o = self.repo.remotes.origin
+        self.c.run('git commit -m "URG Poker Bot - Automatically updating scores on {}"'.format(t))
+        self.c.run('git push origin master')
         print("Pushing local commits to origin..")
-        o.push()
 
     def render_site_and_push(self):
         # copied from bin/publish_to_gh_pages.sh
         with pushd(self.repo_path):
+            r = self.c.run('git rev-parse --quiet --verify render', warn=True)
+            if r.exited:
+                print("Checking out NEW render branch")
+                self.c.run('git checkout -b render')
+            else:
+                print("Checking out EXISTING render branch")
+                self.c.run('git checkout render')
+
             print("Deleting old publication")
             # rm -rf public
             if os.path.isdir('public'):
                 shutil.rmtree('public')
             # mkdir public
             os.mkdir('public')
-            # git worktree prune
-            self.repo.git.worktree("prune")
-            # rm -rf .git/worktrees/public/
-            git_worktrees_public = os.path.join('.git', 'worktrees', 'public')
-            if os.path.isdir(git_worktrees_public):
-                shutil.rmtree(git_worktrees_public)
-
-            print("Checking out gh-pages branch into public")
-            # git worktree add -B gh-pages public origin/gh-pages
-            #
-            # this didn't work for some reason so using subprocess
-            #self.repo.git.worktree("add -B gh-pages public origin/gh-pages")
-            subprocess.run(['git', 'worktree', 'add', '-B', 'gh-pages', 'public', 'origin/gh-pages'],
-                           check=True)
-
-            print("Removing existing files")
-            #shutil.rmtree(os.path.join('public'))
-            files = glob.glob(os.path.join('public', '*'))
-            for f in files:
-                if os.path.isdir(f):
-                    shutil.rmtree(f)
-                else:
-                    os.remove(f)
 
             print("Generating site")
-            out = subprocess.run(['hugo'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            print(out.stdout)
+            self.c.run('hugo')
+
+            print("Committing public/ to render branch")
+            self.c.run('git commit -m "URG Poker Bot - Auto rendering site on {}"'.format(t))
 
             print("Updating gh-pages branch")
-            # cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh) - {}"
-            with pushd('public'):
-                #self.repo.git.add('--all')
-                t = datetime.datetime.now().isoformat()
-                #self.repo.index.commit("URG Poker Bot - Auto rendering site on {}".format(t))
-                
-                #print("Pushing to github")
-                #o = self.repo.remotes.origin
-                #o.push('gh-pages')
-
-                print("Checking git status after rendering in public")
-                out = subprocess.run(['git', 'status', '--porcelain'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                print(out.stdout)
-                if out.stdout:
-                    print("Rendering produced new data, committing and pushing")
-                    out = subprocess.run(['git', 'add', '--all'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                    print(out.stdout)
-                    out = subprocess.run(['git', 'commit', '-m', '"URG Poker Bot - Auto rendering site on {}"'.format(t)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                    print(out.stdout)
-                    if out.returncode != 0:
-                        raise ValueError("Git commit failed")
-                    out = subprocess.run(['git', 'push', 'origin', 'gh-pages'], check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                    print(out.stdout)
-                else:
-                    print("Rendering didn't change anything skipping commit and push")
+            self.c.run('git subtree push --prefix public origin gh-pages')
 
 
-
-
-if __name__ == '__main__':
+@invoke.task
+def build(c):
     with open('config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
     client = PokerMavensClient(config['poker_mavens']['host'],
                                config['poker_mavens']['password'])
-    hugo_repo = HugoPokerRepo(config['git_repo'], config['points'])
+    hugo_repo = HugoPokerRepo(c,
+                              config['git_repo'],
+                              config['points'])
     hugo_repo.clone_or_pull()
 
     results_list = client.tournaments_results_list()
@@ -380,7 +340,7 @@ if __name__ == '__main__':
         print(changed)
         print("end changed")
         hugo_repo.commit_scores_and_push()
-        #hugo_repo.render_site_and_push()
+        hugo_repo.render_site_and_push()
     else:
         print("nothing changed, not doing anything")
 

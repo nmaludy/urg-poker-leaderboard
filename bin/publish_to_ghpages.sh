@@ -10,6 +10,7 @@ fi
 
 if [ -n "$TRAVIS_BUILD" ]
 then
+    git remote add origin git@github.com:nmaludy/urg-poker-leaderboard.git
     git config user.email "administrator@urgpoker.com"
     git config user.name "URG Poker Bot"
 fi
@@ -34,5 +35,4 @@ export TODAY=$(date +%Y-%m-%d)
 cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh) - $TODAY"
 
 echo "Pushing to github"
-git remote add origin-ssh git@github.com:nmaludy/urg-poker-leaderboard.git
-git push origin-ssh gh-pages
+git push origin gh-pages
