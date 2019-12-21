@@ -7,6 +7,7 @@ import json
 import os
 import re
 import requests
+import shutil
 import six
 import subprocess
 import yaml
@@ -126,7 +127,7 @@ class HugoPokerRepo(object):
         # if the directory exists, pull, otherwise clone a fresh copy
         if os.path.isdir(self.repo_path):
             with pushd(self.repo_path):
-                self.c.run("git checkout master")
+                self.c.run("git checkout master", warn=True)
                 self.c.run("git pull")
         else:
             self.c.run("git clone {} {}".format(self.repo_url, self.repo_path))
@@ -275,8 +276,8 @@ class HugoPokerRepo(object):
         self.c.run('git add content')
         print("Committing to local repo...")
         t = datetime.datetime.now().isoformat()
-        self.c.run('git commit -m "URG Poker Bot - Automatically updating scores on {}"'.format(t))
-        self.c.run('git push origin master')
+        self.c.run('git commit -m "URG Poker Bot - Automatically updating scores on {}"'.format(t), warn=True)
+        self.c.run('git push origin master', warn=True)
         print("Pushing local commits to origin..")
 
     def render_site_and_push(self):
@@ -300,7 +301,11 @@ class HugoPokerRepo(object):
             print("Generating site")
             self.c.run('hugo')
 
+            print("Adding all changes in public/")
+            self.c.run('git add public')
+
             print("Committing public/ to render branch")
+            t = datetime.datetime.now().isoformat()
             self.c.run('git commit -m "URG Poker Bot - Auto rendering site on {}"'.format(t))
 
             print("Updating gh-pages branch")
@@ -337,7 +342,8 @@ def build(c):
     for a in agg:
         hugo_repo.render_day_scores_to_file(a)
 
-    changed = hugo_repo.is_change()
+    #changed = hugo_repo.is_change()
+    changed = True
     if changed:
         print("files have changed, committing, rendering and pushing")
         print(changed)
