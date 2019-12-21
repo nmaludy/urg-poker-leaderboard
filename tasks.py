@@ -127,7 +127,6 @@ class HugoPokerRepo(object):
         # if the directory exists, pull, otherwise clone a fresh copy
         if os.path.isdir(self.repo_path):
             with pushd(self.repo_path):
-                self.c.run("git checkout master", warn=True)
                 self.c.run("git pull")
         else:
             self.c.run("git clone {} {}".format(self.repo_url, self.repo_path))
@@ -277,15 +276,17 @@ class HugoPokerRepo(object):
         print("Committing to local repo...")
         t = datetime.datetime.now().isoformat()
         self.c.run('git commit -m "URG Poker Bot - Automatically updating scores on {}"'.format(t), warn=True)
-        self.c.run('git push origin master', warn=True)
         print("Pushing local commits to origin..")
+        self.c.run('git push origin master', warn=True)
 
     def render_site_and_push(self):
         # copied from bin/publish_to_gh_pages.sh
         with pushd(self.repo_path):
             if os.name == 'nt':
+                print('running windows script')
                 self.c.run('.\\bin\\publish_windows.ps1')
             else:
+                print('running linux script')
                 self.c.run('./bin/publish_to_ghpages.sh')
 
 
