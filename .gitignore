@@ -2,5 +2,4 @@ config.yaml
 github_deploy_key
 hugo_*.deb
 *.log
-public
 venv

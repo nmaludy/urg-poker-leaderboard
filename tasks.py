@@ -126,6 +126,7 @@ class HugoPokerRepo(object):
         # if the directory exists, pull, otherwise clone a fresh copy
         if os.path.isdir(self.repo_path):
             with pushd(self.repo_path):
+                self.c.run("git checkout master")
                 self.c.run("git pull")
         else:
             self.c.run("git clone {} {}".format(self.repo_url, self.repo_path))
@@ -268,6 +269,8 @@ class HugoPokerRepo(object):
         return self.c.run('git status --porcelain')
 
     def commit_scores_and_push(self):
+        print("Checking out master branch")
+        self.c.run("git checkout master")
         print("Adding all data in content/")
         self.c.run('git add content')
         print("Committing to local repo...")
