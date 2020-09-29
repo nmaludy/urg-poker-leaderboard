@@ -6,10 +6,19 @@
     <description>Recent content in Scores on URG Poker Scores</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://nmaludy.github.io/urg-poker-leaderboard/scores/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Scores for 2020-09-28</title>
+      <link>https://nmaludy.github.io/urg-poker-leaderboard/scores/2020-09-28/</link>
+      <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://nmaludy.github.io/urg-poker-leaderboard/scores/2020-09-28/</guid>
+      <description>Pot limit Omaha Hi-Lo    Place User Points     1 JoAnnmeme 12,000   2 Dggreen 10,000   3 gracie 8,000   4 joe 6,000   5 patc 4,000   6 Norma1 2,000   7 Nana_Sharon 1,000   8 bill 500    Month Point Totals    Place User Points     1 Dggreen 169,000   2 JoAnnmeme 157,500   3 gracie 101,250   4 joe 100,000   5 bill 98,750   6 patc 97,500   7 PaPaLarry 93,500   8 Nana_Sharon 75,000   9 Norma1 53,250    </description>
+    </item>
     
     <item>
       <title>Scores for 2020-09-25</title>
