@@ -114,14 +114,16 @@ class PokerMavensClient(object):
 
 class HugoPokerRepo(object):
 
-    def __init__(self, c, repo_url, points_map):
+    def __init__(self, c, repo_url,
+                 points_mapping_default, points_mapping_event_name):
         self.c = c
         self.repo_url = repo_url
         self.repo_name = repo_url.split('/')[-1].replace('.git', '')
         self.repo_path = '.'
         self.template_path = os.path.join(self.repo_path, 'templates', 'scores.j2.md')
         self.rendered_scores_path = os.path.join(self.repo_path, 'content', 'scores')
-        self.points_map = points_map
+        self.points_mapping_default = points_mapping_default
+        self.points_mapping_event_name = points_mapping_event_name
 
     def clone_or_pull(self):
         # if the directory exists, pull, otherwise clone a fresh copy
@@ -144,10 +146,19 @@ class HugoPokerRepo(object):
         scores['date_year_month_day'] = datetime.datetime.strftime(start_dt, '%Y-%m-%d')
         scores['date_time'] = start_str
 
+        # try to match event by name (partial), if we find it then use the points mapping
+        # otherwise use the default
+        # currently this is only used to give different points for the 'main event' tournament
         name_lower = scores['name'].lower()
-        points_list = self.points_map['default']
-        if name_lower in self.points_map:
-            points_list = self.points_map[name_lower]
+        points_list = None
+        for event_pattern, points_map in six.iteritems(self.points_mapping_event_name):
+            # in the future we might need to get crazy and do regex (maybe)
+            if event_pattern in name_lower:
+                points_list = points_map
+                break
+        if points_list is None:
+            points_list = self.points_mapping_default
+
         for key, value in six.iteritems(tournament_results):
             if not key.startswith('Place'):
                 continue
@@ -299,7 +310,8 @@ def build(c):
                                config['poker_mavens']['password'])
     hugo_repo = HugoPokerRepo(c,
                               config['git_repo'],
-                              config['points'])
+                              config['points_mapping_default'],
+                              config['points_mapping_event_name'])
     hugo_repo.clone_or_pull()
 
     results_list = client.tournaments_results_list()

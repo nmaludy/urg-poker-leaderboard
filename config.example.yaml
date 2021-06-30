@@ -3,27 +3,26 @@ poker_mavens:
   host: 'poker.mavens.com'
   password: 'xxx'
 
-git_repo: 'git@github.com:nmaludy/urg-poker-leaderboard.git'
+points_mapping_default:
+  - 12000
+  - 10000
+  - 8000
+  - 6000
+  - 4000
+  - 2000
+  - 1000
+  - 500
+  - 250
+  - 125
+  - 75
+  - 50
+  - 25
+  - 10
+  - 5
+  - 2
+  - 1
 
-points:
-  default:
-    - 12000
-    - 10000
-    - 8000
-    - 6000
-    - 4000
-    - 2000
-    - 1000
-    - 500
-    - 250
-    - 125
-    - 75
-    - 50
-    - 25
-    - 10
-    - 5
-    - 2
-    - 1
+points_mapping_event_name:
   'main event':
     - 1000000
     - 950000
