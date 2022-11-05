@@ -52,7 +52,7 @@ choco install -y hugo
 https://www.python.org/downloads/windows/
 
 ``` powershell
-choco install -y python3
+choco install -y python --version=3.9.0
 ```
 
 Add the following System environment variables in Syste -> Advanced System Settings -> Advanced -> Environment Variables:
