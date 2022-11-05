@@ -146,15 +146,15 @@ https://gist.github.com/qoomon/c57b0dc866221d91704ffef25d41adcf
 Install python (3.6+) https://www.python.org/downloads/
 
 ``` shell
-virtualenv venv
-source ./venv/bin/activate
+    python3 -m venv venv
+source ./venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
 # Adding new scores automatically
 
 ``` shell
-source ./venv/bin/activate
+source ./venv/Scripts/activate
 # This will automatically commit and push
 python ./poker_mavens.py
 ```
