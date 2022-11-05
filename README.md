@@ -33,6 +33,12 @@ https://git-scm.com/download/win
 choco install -y git
 ```
 
+``` powershell
+GIT_PATH = %ProgramFiles%\Git
+# append the following to PATH
+PATH = %GIT_PATH%\bin
+```
+
 ## Install hugo
 
 https://gohugo.io/getting-started/installing/
@@ -58,11 +64,6 @@ PATH = ;%PYTHON_PATH%;%PYTHON_PATH%\Scripts
 ```
 You will now have to start a new PowerShell session for these variables to be updated.
 
-Install virtualenv
-``` powershell
-pip install virtualenv
-```
-
 ## Setup GitHub deploy key (SSH)
 
 ``` bash
@@ -81,8 +82,8 @@ mkdir git
 cd git
 git clone git@github.com:nmaludy/urg-poker-leaderboard.git
 cd urg-poker-leaderboard
-virtualenv venv
-.\venv\bin\activate
+python.exe -m venv venv
+.\venv\Scripts\activate.bat
 pip install -r requirements.txt
 ```
 
@@ -101,17 +102,27 @@ General:
   user: administrator
   Run whether user is logged in or not
   Configure For: Server 2012 R2
-  
+
 Triggers:
   Schedule:
   Daily @ 8pm
   Repeat every 10 minutes for a duration of 2 hours
   Enabled
-  
+
 Actions:
  Start a program
- Program/script: C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe
- Add arguments: -Command "&{ C:\Users\Administrator\git\urg-poker-leaderboard\run_windows.ps1 *> C:\Users\Administrator\git\urg-poker-leaderboard\poker_mavens.log }; exit $LASTEXITCODE"
+ Program/script: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ Add arguments: -ExecutionPolicy Bypass -Command "&{ C:\Users\nmaludy\git\urg-poker-leaderboard\run_windows.ps1 *> C:\Users\nmaludy\git\urg-poker-leaderboard\poker_mavens.log }; exit $LASTEXITCODE"
+```
+
+Configure user to have Logon as Batch Job rights:
+
+```powershell
+Start -> Control Panel
+Administrative Tools -> Local Secirty Policy
+Local Policies -> User Rights Assignment
+Log on as a batch job
+< add user >
 ```
 
 # Create the site from scratch
