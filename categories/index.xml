@@ -6,7 +6,7 @@
     <description>Recent content in Categories on URG Poker Scores</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Mar 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://nmaludy.github.io/urg-poker-leaderboard/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>2023</title>
       <link>https://nmaludy.github.io/urg-poker-leaderboard/categories/2023/</link>
-      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 04 Mar 2023 00:00:00 +0000</pubDate>
       
       <guid>https://nmaludy.github.io/urg-poker-leaderboard/categories/2023/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>2023-03</title>
+      <link>https://nmaludy.github.io/urg-poker-leaderboard/categories/2023-03/</link>
+      <pubDate>Sat, 04 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://nmaludy.github.io/urg-poker-leaderboard/categories/2023-03/</guid>
       <description></description>
     </item>
     
