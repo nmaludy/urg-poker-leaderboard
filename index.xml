@@ -6,10 +6,19 @@
     <description>Recent content on URG Poker Scores</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Mar 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://nmaludy.github.io/urg-poker-leaderboard/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Scores for 2023-03-13</title>
+      <link>https://nmaludy.github.io/urg-poker-leaderboard/scores/2023-03-13/</link>
+      <pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://nmaludy.github.io/urg-poker-leaderboard/scores/2023-03-13/</guid>
+      <description>Pot limit Omaha Hi-Lo    Place User Points     1 Norma1 12,000   2 PaPaLarry 10,000   3 Nana_Sharon 8,000   4 patc 6,000   5 bill 4,000   6 joe 2,000   7 gracie 1,000    Month Point Totals    Place User Points     1t Norma1 80,000   1t joe 80,000   3 bill 74,000   4 Nana_Sharon 63,000   5 PaPaLarry 62,000   6 gracie 39,000   7 patc 29,000    </description>
+    </item>
     
     <item>
       <title>Scores for 2023-03-10</title>
