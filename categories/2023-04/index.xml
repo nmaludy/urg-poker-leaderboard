@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2023-04 on URG Poker Scores</title>
+    <link>https://nmaludy.github.io/urg-poker-leaderboard/categories/2023-04/</link>
+    <description>Recent content in 2023-04 on URG Poker Scores</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nmaludy.github.io/urg-poker-leaderboard/categories/2023-04/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Scores for 2023-04-03</title>
+      <link>https://nmaludy.github.io/urg-poker-leaderboard/scores/2023-04-03/</link>
+      <pubDate>Mon, 03 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://nmaludy.github.io/urg-poker-leaderboard/scores/2023-04-03/</guid>
+      <description>Pot limit Omaha Hi-Lo    Place User Points     1 PaPaLarry 12,000    Month Point Totals    Place User Points     1 PaPaLarry 12,000    </description>
+    </item>
+    
+  </channel>
+</rss>
